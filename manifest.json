@@ -1,0 +1,9 @@
+{
+  "id": "questify-rpg",
+  "name": "Questify RPG",
+  "version": "2.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Responsive personal quest dashboard with editable quests, achievements, XP progression and a 100-quest library.",
+  "author": "Questify",
+  "isDesktopOnly": false
+}

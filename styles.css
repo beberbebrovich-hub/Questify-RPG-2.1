@@ -1,0 +1,550 @@
+.questify-root {
+  --q-bg: var(--background-primary);
+  --q-panel: var(--background-secondary);
+  --q-border: var(--background-modifier-border);
+  --q-gold: #d6ad62;
+  --q-purple: #9b82dc;
+  padding: 14px 12px 28px;
+  overflow-y: auto;
+}
+.q-header { margin: 4px 0 18px; }
+.q-eyebrow { color: var(--text-faint); font-size: 9px; letter-spacing: 2px; font-weight: 700; }
+.q-header h1 { margin: 5px 0 0; font-size: 27px; letter-spacing: -.7px; }
+.q-subtitle { color: var(--text-muted); font-size: 12px; }
+.q-panel { background: linear-gradient(135deg, var(--background-secondary), var(--background-secondary-alt)); border: 1px solid var(--q-border); border-radius: 14px; }
+.q-profile { display: flex; align-items: center; gap: 12px; padding: 14px; }
+.q-avatar { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; color: #f4d89b; font-size: 26px; background: linear-gradient(145deg,#554477,#29243a); border: 1px solid #8068a8; }
+.q-profile-info { min-width: 0; flex: 1; }
+.q-player-name { font-weight: 700; font-size: 15px; }
+.q-player-class { color: var(--text-muted); font-size: 11px; margin-top: 2px; }
+.q-level { color: #e4c17e; border: 1px solid #806b48; background: #4a3c27; padding: 5px 7px; border-radius: 7px; font-size: 9px; font-weight: 800; white-space: nowrap; }
+.q-xp-wrap { margin: 9px 2px 15px; }
+.q-xp-labels { display: flex; justify-content: space-between; color: var(--text-muted); font-size: 10px; margin-bottom: 5px; gap: 8px; }
+.q-progress { height: 7px; border-radius: 20px; overflow: hidden; background: var(--background-modifier-border); }
+.q-progress-fill { height: 100%; background: linear-gradient(90deg,#8267bd,#d8b56e); border-radius: inherit; transition: width .3s ease; }
+.q-stats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; margin-bottom: 13px; }
+.q-stat-card { background: var(--q-panel); border: 1px solid var(--q-border); border-radius: 10px; padding: 9px 7px; text-align: center; min-width: 0; }
+.q-stat-icon { color: var(--q-purple); display: inline-flex; margin-bottom: 3px; }
+.q-stat-icon svg { width: 14px; height: 14px; }
+.q-stat-value { font-size: 17px; font-weight: 750; }
+.q-stat-label { color: var(--text-muted); font-size: 9px; }
+.q-actions { display: flex; gap: 8px; margin-bottom: 21px; }
+.q-button { border-radius: 8px; padding: 7px 10px; font-size: 11px; font-weight: 650; cursor: pointer; }
+.q-primary { flex: 1; background: #6d559b; color: white; border: 1px solid #8c72bd; }
+.q-primary:hover { background: #8065b4; }
+.q-secondary { background: var(--background-secondary); border: 1px solid var(--q-border); color: var(--text-normal); }
+.q-section-title { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 750; margin: 19px 0 9px; }
+.q-section-title svg { width: 15px; height: 15px; color: var(--q-gold); }
+.q-quest-list { display: flex; flex-direction: column; gap: 8px; }
+.q-quest-card { border: 1px solid var(--q-border); background: var(--q-panel); border-radius: 11px; padding: 11px; }
+.q-quest-title { font-size: 12px; font-weight: 700; }
+.q-quest-desc { color: var(--text-muted); font-size: 10px; margin-top: 3px; line-height: 1.4; }
+.q-quest-meta { display: flex; gap: 10px; color: var(--text-faint); font-size: 9px; margin-top: 9px; }
+.q-quest-meta span:first-child { color: #d8b56e; }
+.q-complete { margin-top: 9px; width: 100%; background: rgba(89,139,104,.15); color: var(--text-success); border: 1px solid rgba(89,139,104,.4); }
+.q-empty { color: var(--text-muted); border: 1px dashed var(--q-border); border-radius: 10px; padding: 14px; font-size: 11px; line-height: 1.5; text-align: center; }
+.q-achievements { display: flex; flex-direction: column; gap: 6px; }
+.q-achievement { display: flex; align-items: center; gap: 9px; border: 1px solid var(--q-border); background: var(--q-panel); border-radius: 9px; padding: 8px; opacity: .55; }
+.q-achievement.is-unlocked { opacity: 1; border-color: #806b48; background: linear-gradient(90deg,rgba(214,173,98,.10),var(--q-panel)); }
+.q-achievement-icon { width: 27px; height: 27px; display: grid; place-items: center; border-radius: 8px; background: var(--background-primary); color: var(--q-gold); font-size: 17px; }
+.q-achievement-copy { flex: 1; min-width: 0; }
+.q-achievement-title { font-size: 10px; font-weight: 700; }
+.q-achievement-desc { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+.q-achievement-state { font-size: 8px; color: var(--text-faint); letter-spacing: .5px; }
+.q-footer { color: var(--text-faint); text-align: center; font-size: 9px; margin-top: 20px; }
+
+
+/* =========================================================
+   Questify RPG 2.0 — responsive desktop + mobile layout
+   ========================================================= */
+
+/* Keep the view readable in narrow sidebars and wide workspaces. */
+.questify-root {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 980px;
+  margin-inline: auto;
+  padding: clamp(10px, 2.2vw, 24px);
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+  overflow-x: hidden;
+}
+
+.questify-root *,
+.questify-root *::before,
+.questify-root *::after {
+  box-sizing: border-box;
+}
+
+.q-header h1 {
+  line-height: 1.15;
+}
+
+.q-profile,
+.q-quest-card,
+.q-skill-card,
+.q-achievement,
+.q-stat-card {
+  min-width: 0;
+}
+
+.q-quest-title,
+.q-quest-desc,
+.q-achievement-title,
+.q-achievement-desc,
+.q-button,
+.q-mini-button,
+.questify-root button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.q-button:focus-visible,
+.q-mini-button:focus-visible,
+.questify-root button:focus-visible {
+  outline: 2px solid var(--interactive-accent);
+  outline-offset: 2px;
+}
+
+/* Desktop: use available width without making the dashboard too stretched. */
+@media (min-width: 900px) {
+  .questify-root {
+    padding: 24px 28px 36px;
+  }
+
+  .q-header {
+    margin-bottom: 22px;
+  }
+
+  .q-header h1 {
+    font-size: 32px;
+  }
+
+  .q-profile {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .q-avatar {
+    width: 54px;
+    height: 54px;
+    font-size: 29px;
+  }
+
+  .q-stats {
+    gap: 12px;
+  }
+
+  .q-stat-card {
+    padding: 13px 10px;
+  }
+
+  .q-stat-value {
+    font-size: 20px;
+  }
+
+  .q-quest-card {
+    padding: 14px;
+  }
+
+  .q-quest-card .q-complete {
+    width: auto;
+    min-width: 116px;
+    float: right;
+    margin-top: -28px;
+  }
+
+  .q-quest-card::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  .q-achievement {
+    padding: 11px 12px;
+  }
+}
+
+/* Tablet and narrow desktop panes. */
+@media (min-width: 601px) and (max-width: 899px) {
+  .q-quest-card .q-complete {
+    min-height: 38px;
+  }
+}
+
+/* Phones: comfortable tap targets, denser spacing, no tiny controls. */
+@media (max-width: 600px) {
+  .questify-root {
+    padding: 10px 10px max(24px, env(safe-area-inset-bottom));
+  }
+
+  .q-header {
+    margin: 2px 0 14px;
+  }
+
+  .q-header h1 {
+    font-size: 24px;
+  }
+
+  .q-subtitle {
+    font-size: 12px;
+  }
+
+  .q-profile {
+    padding: 11px;
+    gap: 9px;
+    border-radius: 12px;
+  }
+
+  .q-avatar {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 11px;
+  }
+
+  .q-player-name {
+    font-size: 14px;
+  }
+
+  .q-level {
+    font-size: 8px;
+    padding: 5px 6px;
+  }
+
+  .q-xp-wrap {
+    margin: 8px 1px 13px;
+  }
+
+  .q-xp-labels {
+    font-size: 9px;
+    flex-wrap: wrap;
+  }
+
+  .q-progress {
+    height: 8px;
+  }
+
+  .q-stats {
+    gap: 6px;
+    margin-bottom: 11px;
+  }
+
+  .q-stat-card {
+    padding: 9px 5px;
+    border-radius: 9px;
+  }
+
+  .q-stat-value {
+    font-size: 16px;
+  }
+
+  .q-stat-label {
+    font-size: 9px;
+    line-height: 1.25;
+  }
+
+  .q-actions {
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .q-button {
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .q-section-title {
+    margin: 17px 0 8px;
+    font-size: 13px;
+  }
+
+  .q-quest-card {
+    padding: 11px;
+    border-radius: 10px;
+  }
+
+  .q-quest-title {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .q-quest-desc {
+    font-size: 11px;
+  }
+
+  .q-quest-meta {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-size: 9px;
+  }
+
+  .q-complete {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  .q-achievement {
+    padding: 8px;
+    gap: 7px;
+  }
+
+  .q-achievement-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+  }
+
+  .q-achievement-title {
+    font-size: 10px;
+  }
+
+  .q-achievement-desc {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+
+  .q-achievement-state {
+    font-size: 7px;
+    white-space: nowrap;
+  }
+
+  /* Obsidian modal controls are easier to use on touch screens. */
+  .modal .questify-root,
+  .modal .setting-item-control,
+  .modal input,
+  .modal textarea,
+  .modal select,
+  .modal button {
+    max-width: 100%;
+  }
+}
+
+/* Very narrow phones and narrow Obsidian sidebars. */
+@media (max-width: 360px) {
+  .q-profile {
+    flex-wrap: wrap;
+  }
+
+  .q-level {
+    margin-left: auto;
+  }
+
+  .q-xp-labels span:last-child {
+    width: 100%;
+  }
+
+  .q-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .q-achievement-state {
+    display: none;
+  }
+
+  .q-actions {
+    flex-direction: column;
+  }
+
+  .q-secondary {
+    width: 100%;
+  }
+}
+
+/* Respect the user's reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  .questify-root *,
+  .questify-root *::before,
+  .questify-root *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+
+/* Questify RPG 2.0 — editable quests and custom achievements */
+.q-quest-controls, .q-achievement-controls {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.q-quest-controls .q-button, .q-achievement-controls .q-button {
+  min-height: 36px;
+}
+.q-quest-controls .q-complete {
+  width: auto;
+  margin-top: 0;
+  flex: 1 1 140px;
+}
+.q-delete {
+  color: var(--text-error);
+  border: 1px solid var(--q-border);
+  background: transparent;
+}
+.q-achievement-add {
+  width: 100%;
+  margin: -2px 0 9px;
+}
+.q-achievement {
+  flex-wrap: wrap;
+}
+.q-achievement-controls {
+  width: 100%;
+  padding-left: 36px;
+  margin-top: 2px;
+}
+.q-achievement-controls .q-button {
+  flex: 1 1 90px;
+}
+.q-library-modal {
+  max-height: min(75vh, 720px);
+  overflow-y: auto;
+}
+.q-library-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: 2px;
+}
+.q-library-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--q-border);
+  background: var(--background-secondary);
+  border-radius: 10px;
+}
+.q-library-copy {
+  min-width: 0;
+  flex: 1;
+}
+.q-library-item .q-button {
+  flex: 0 0 auto;
+}
+@media (max-width: 600px) {
+  .q-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .q-actions .q-primary {
+    grid-column: 1 / -1;
+  }
+  .q-actions .q-button {
+    min-height: 42px;
+  }
+  .q-quest-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .q-quest-controls .q-complete {
+    grid-column: 1 / -1;
+    min-height: 44px;
+  }
+  .q-quest-controls .q-button {
+    width: 100%;
+    min-height: 42px;
+  }
+  .q-achievement-controls {
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .q-achievement-controls .q-button {
+    min-height: 42px;
+  }
+  .q-library-item {
+    align-items: flex-start;
+  }
+  .q-library-item .q-button {
+    min-height: 42px;
+  }
+}
+
+
+/* Daily completion history */
+.q-history-modal {
+  max-height: min(78vh, 760px);
+  overflow-y: auto;
+}
+.q-history-day {
+  margin: 14px 0;
+  padding: 13px;
+  border: 1px solid var(--q-border);
+  border-radius: 12px;
+  background: var(--background-secondary);
+}
+.q-history-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-bottom: 10px;
+}
+.q-history-heading strong {
+  font-size: 15px;
+}
+.q-history-heading span {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.q-history-list {
+  display: grid;
+  gap: 7px;
+}
+.q-history-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 9px;
+  border-radius: 9px;
+  background: var(--background-primary);
+}
+.q-history-check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: var(--text-success);
+  background: var(--background-modifier-success);
+  font-weight: 800;
+}
+.q-history-copy {
+  flex: 1;
+  min-width: 0;
+}
+.q-history-title {
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.q-history-desc {
+  color: var(--text-muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.q-history-xp {
+  flex: 0 0 auto;
+  color: var(--text-success);
+  font-size: 12px;
+  font-weight: 750;
+}
+@media (max-width: 600px) {
+  .q-history-heading {
+    display: grid;
+  }
+  .q-history-day {
+    padding: 10px;
+  }
+}
